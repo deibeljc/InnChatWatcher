@@ -1,0 +1,9 @@
+{
+  "name": "innchatwatcher",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "simple-xmpp": "latest",
+    "mongoose": "latest"
+  }
+}
