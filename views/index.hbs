@@ -1,3 +1,6 @@
+<!-- THIS IS A STUPID HACK. NEVER DO THIS AGAIN -->
+{{#setLocalsDate}}nothing{{/setLocalsDate}}
+
 <!-- Begin page content -->
 <div class="container">
     <div class="page-header">
@@ -9,6 +12,12 @@
     <div class="panel-group" role="tablist">
         <div class="panel panel-default">
             {{#each chats}}
+                {{#if_eq date}}
+                    <h3 style="text-align:center;margin-bottom:15px;">{{#convertDateToDay}}{{date}}{{/convertDateToDay}}</h3>
+                {{/if_eq}}
+
+                {{#setLocalsDate}}{{#convertDateToDay}}{{date}}{{/convertDateToDay}}{{/setLocalsDate}}
+
                 <div id="collapseListGroup{{id}}" style="padding-left:15px;" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading{{id}}" aria-expanded="true">
                     <ul class="list-group" style="height:200px; overflow: scroll;">
                     </ul>

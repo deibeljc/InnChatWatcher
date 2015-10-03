@@ -16,6 +16,13 @@ app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
+// This is a terrible hack and you should feel bad.
+app.locals.newDate = "";
+
+/**
+ * The main route. This does the magic! It will display all the chats
+ * and then categorize it by day via a hack
+ */
 app.get('/', function (req, res) {
     var getChats = Chat.
         find({
@@ -33,12 +40,35 @@ app.get('/', function (req, res) {
                 convertDateToLocal: function(options) {
                     var newDate = new Date(options.fn(this));
                     return newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString();
+                },
+                convertDateToDay: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString();
+                },
+                if_eq: function(a, opts) {
+                    var newDate = new Date(a);
+                    newDate = newDate.toLocaleDateString();
+
+                    if(app.locals.newDate.localeCompare(newDate) == 0) { // Or === depending on your needs
+                        console.log(app.locals.newDate + " ||| " + a);
+                        return "";
+                    } else {
+                        console.log("Something " + app.locals.newDate + " ||| " + a);
+                        return opts.fn(this);
+                    }
+                },
+                setLocalsDate: function(options) {
+                    app.locals.newDate = options.fn(this);
+                    return;
                 }
             }
         });
     });
 });
 
+/**
+ * Simple get dump of all the CIG employee chats.
+ */
 app.get('/api/chats/cig', function(req, res) {
     var getChats = Chat.
         find({
@@ -53,6 +83,9 @@ app.get('/api/chats/cig', function(req, res) {
     });
 });
 
+/**
+ * This will get the previous 50 chats from a specific date.
+ */
 app.get('/api/chats/previous/:date', function(req, res) {
     var date = req.params.date;
 
