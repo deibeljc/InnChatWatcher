@@ -14,10 +14,13 @@
                     </ul>
                 </div>
 
-                <div class="panel-heading" role="button" data-date="{{date}}" data-toggle="collapse" href="#collapseListGroup{{id}}" aria-expanded="false" aria-controls="collapseListGroup{{id}}" id="collapseListGroupHeading{{id}}">
-                    <h4 class="panel-title">
+                <div class="panel-heading" role="button"
+                     data-date="{{date}}" data-toggle="collapse" href="#collapseListGroup{{id}}"
+                     aria-expanded="false" aria-controls="collapseListGroup{{id}}" id="collapseListGroupHeading{{id}}" >
+                    <h4 class="panel-title" data-toggle="tooltip" data-placement="top" title="{{#convertDateToLocal}}{{date}}{{/convertDateToLocal}}">
                         <a class="">
-                            <b>{{name}}</b>: {{message}}
+                            <b>{{name}}</b>:
+                            {{message}}
                         </a>
                     </h4>
                 </div>

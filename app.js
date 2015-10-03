@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-var hbs = require('hbs');
+var exphbs  = require('express-handlebars');
 
 // Database things
 var mongoose    = require('mongoose');
@@ -11,12 +11,10 @@ var Chat        = require('./app/models/chat');
 // Connect to the mongo database
 mongoose.connect("localhost:27017");
 
-app.set('views', __dirname + '/views');
+var exphbs  = require('express-handlebars');
+app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
-
 app.use(express.static(__dirname + '/public'));
-
-app.engine('html', hbs.__express);
 
 app.get('/', function (req, res) {
     var getChats = Chat.
@@ -29,7 +27,15 @@ app.get('/', function (req, res) {
         if (err) {
             res.send(err);
         }
-        res.render('index', { chats: chats });
+        res.render('index', {
+            chats: chats,
+            helpers: {
+                convertDateToLocal: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString();
+                }
+            }
+        });
     });
 });
 
