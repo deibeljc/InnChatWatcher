@@ -1,0 +1,27 @@
+<!-- Begin page content -->
+<div class="container">
+    <div class="page-header">
+        <h1>CIG Chat Monitor</h1>
+    </div>
+    <p class="lead">This is a list of all the CIG Posts made in the RSI Chat. If you click on the name it will show
+        past chats leading up to it for context.</p>
+
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            {{#each chats}}
+                <div id="collapseListGroup{{id}}" style="padding-left:15px;" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading{{id}}" aria-expanded="true">
+                    <ul class="list-group" style="height:200px; overflow: scroll;">
+                    </ul>
+                </div>
+
+                <div class="panel-heading" role="button" data-date="{{date}}" data-toggle="collapse" href="#collapseListGroup{{id}}" aria-expanded="false" aria-controls="collapseListGroup{{id}}" id="collapseListGroupHeading{{id}}">
+                    <h4 class="panel-title">
+                        <a class="">
+                            <b>{{name}}</b>: {{message}}
+                        </a>
+                    </h4>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
