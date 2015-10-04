@@ -39,8 +39,8 @@
                      aria-expanded="false" aria-controls="collapseListGroup{{id}}" id="collapseListGroupHeading{{id}}" >
                     <h4 class="panel-title" data-toggle="tooltip" data-placement="top" title="{{#convertDateToLocal}}{{date}}{{/convertDateToLocal}}">
                         <a class="">
-                            <b>{{name}}</b>:
-                            {{message}}
+                            <b>{{name}}</b> <span>({{#convertDateToTime}}{{date}}{{/convertDateToTime}})</span>:
+                            <span style="font-size:13px;">{{message}}</span>
                         </a>
                     </h4>
                 </div>
