@@ -78,7 +78,7 @@ app.get('/', apicache("1 minute"), function (req, res) {
  * and then categorize it by day via a hack.
  * This allows you to set the chat limit
  */
-app.get('/:limit', function (req, res) {
+app.get('/:limit', apicache("1 minute"), function (req, res) {
     var limit = req.params.limit;
 
     // Set limit to default value if it isn't set
