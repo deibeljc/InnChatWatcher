@@ -12,6 +12,12 @@
     <!--<p class="lead">This is a list of all the CIG Posts made in the RSI Chat. If you click on the name it will show-->
         <!--past chats leading up to it for context. The default limit is 200 posts, to set your own add /numberHere to the URL.-->
         <!--So for example /150 will show me 150 posts and /10000000000 will show me all the posts.</p>-->
+    <div class="btn-group col-md-12" style="margin-bottom:15px;" role="group" aria-label="...">
+        <a href="/300" type="button" class="btn btn-default col-md-4">Show 300 Records</a>
+        <a href="/1000" type="button" class="btn btn-default col-md-4">Show 1000 Records</a>
+        <a href="/100000000000" type="button" class="btn btn-default col-md-4">Show All Records</a>
+    </div>
+
 
     <div class="panel-group" role="tablist">
         <div class="panel panel-default">
@@ -22,7 +28,7 @@
 
                 {{#setLocalsDate}}{{#convertDateToDay}}{{date}}{{/convertDateToDay}}{{/setLocalsDate}}
 
-                <div id="collapseListGroup{{id}}" style="padding-left:15px;border-top: 1px solid rgb(27, 26, 26);" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading{{id}}" aria-expanded="true">
+                <div id="collapseListGroup{{id}}" style="padding-left:15px;" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading{{id}}" aria-expanded="true">
                     <ul class="list-group" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';"
                         style="height:200px; overflow: scroll;">
                     </ul>
