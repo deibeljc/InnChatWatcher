@@ -116,6 +116,10 @@ app.get('/:limit', function (req, res) {
                     var newDate = new Date(options.fn(this));
                     return newDate.toLocaleDateString();
                 },
+                convertDateToTime: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleTimeString();
+                },
                 if_eq: function(a, opts) {
                     var newDate = new Date(a);
                     newDate = newDate.toLocaleDateString();
