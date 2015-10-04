@@ -1,20 +1,22 @@
-var express = require('express');
-var app = express();
-var exphbs  = require('express-handlebars');
-var compression = require('compression')
+// Global vars
+var express     = require('express');
+var app         = express();
+var exphbs      = require('express-handlebars');
+var compression = require('compression');
+var apicache    = require('apicache').options({ debug: true }).middleware;
 
 // Database things
 var mongoose    = require('mongoose');
 // Models
 var Chat        = require('./app/models/chat');
 
+
 // Connect to the mongo database
 mongoose.connect("localhost:27017");
 
-var exphbs  = require('express-handlebars');
+// Setup express
 app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
-
 // Compress
 var oneDay = 86400000;
 app.use(compression());
@@ -28,7 +30,7 @@ app.locals.newDate = "";
  * and then categorize it by day via a hack. This defaults it to 1000
  * chats
  */
-app.get('/', function (req, res) {
+app.get('/', apicache("1 minute"), function (req, res) {
     var getChats = Chat.
         find({
             // Find the person here :D
