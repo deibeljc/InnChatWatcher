@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
         find({
             // Find the person here :D
             'name': new RegExp("cig", "i")
-        }).sort({ date: -1 }).limit(200);
+        }).sort({ date: -1 }).limit(200).cache();
 
     getChats.exec(function (err, chats) {
         if (err) {
@@ -95,7 +95,7 @@ app.get('/:limit', function (req, res) {
         find({
             // Find the person here :D
             'name': new RegExp("cig", "i")
-        }).sort({ date: -1 }).limit(limit);
+        }).sort({ date: -1 }).limit(limit).cache();
 
     getChats.exec(function (err, chats) {
         if (err) {
@@ -162,7 +162,7 @@ app.get('/api/chats/previous/:date', function(req, res) {
     startDate.setMinutes(startDate.getMinutes() - 60);
 
     // Get up to 50 chats before the current chat.
-    var queryOtherChats = Chat.find().where('date').lt(new Date(date)).gt(startDate).sort({date: -1}).limit(50);
+    var queryOtherChats = Chat.find().where('date').lt(new Date(date)).gt(startDate).sort({date: -1}).limit(50).cache();
 
     queryOtherChats.exec(function(err, chats) {
         if (err) {
