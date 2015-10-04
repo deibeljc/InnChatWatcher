@@ -34,9 +34,17 @@
 
 {{{body}}}
 
-<footer class="footer">
+<footer class="footer navbar-fixed-bottom">
     <div class="container">
-        <p class="text-muted">Page made by Dibesjr.</p>
+        <p class="text-muted">Made by Dibesjr. Graciously funded currently by <a href="http://imperialnews.network">INN</a>.
+            Please consider <a href="https://www.paypal.me/JonDeibel">donating</a> to help cover server costs
+            <span class="donationPopup" data-container="body" data-toggle="popover"
+               data-trigger="hover" data-placement="top" data-title="Help keep me alive!"
+                  data-content="I host a few services through this server which costs about $20 monthly.
+                  It currently hosts the CIG Chat Monitor and two services that automatically update the
+                  RSI Crowdfunding tracker! Every dime will go to keep this running for as long as possible,
+                  thank you so much for your consideration!"><a>[read more]</a></span>
+            as I am a poor student.</p>
     </div>
 </footer>
 
@@ -46,6 +54,7 @@
 
 <script>
     $('[data-toggle="tooltip"]').tooltip();
+    $('.donationPopup').popover();
 
     $(".panel-heading").click(function() {
         var thisDiv = $(this);
