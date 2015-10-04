@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
         find({
             // Find the person here :D
             'name': new RegExp("cig", "i")
-        }).sort({ date: -1 }).limit(1000);
+        }).sort({ date: -1 }).limit(200);
 
     getChats.exec(function (err, chats) {
         if (err) {
