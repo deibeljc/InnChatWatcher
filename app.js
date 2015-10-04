@@ -39,8 +39,8 @@ app.get('/', function (req, res) {
     var getChats = Chat.
         find({
             // Find the person here :D
-            'name': new RegExp("cig", "i")
-        }).sort({ date: -1 }).limit(200).cache();
+            'name': new RegExp("141235124513452345", "i")
+        }).sort({ date: -1 }).limit(200);
 
     getChats.exec(function (err, chats) {
         if (err) {
@@ -83,6 +83,58 @@ app.get('/', function (req, res) {
 });
 
 /**
+ * The *key* route for Erris to still be able to view it.
+ */
+app.get('/7b2e75a5cf2ae815b9b15fc74d2fc5fd', function (req, res) {
+    var getChats = Chat.
+        find({
+            // Find the person here :D
+            'name': new RegExp("cig", "i")
+        }).sort({ date: -1 }).limit(200);
+    console.log("Viewing all data");
+    getChats.exec(function (err, chats) {
+        if (err) {
+            res.send(err);
+        }
+        res.render('index', {
+            chats: chats,
+            key: "7b2e75a5cf2ae815b9b15fc74d2fc5fd",
+            helpers: {
+                convertDateToLocal: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString();
+                },
+                convertDateToDay: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString();
+                },
+                convertDateToTime: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleTimeString();
+                },
+                if_eq: function(a, opts) {
+                    var newDate = new Date(a);
+                    newDate = newDate.toLocaleDateString();
+
+                    if(app.locals.newDate.localeCompare(newDate) == 0) { // Or === depending on your needs
+                        //console.log(app.locals.newDate + " ||| " + a);
+                        return "";
+                    } else {
+                        //console.log("Something " + app.locals.newDate + " ||| " + a);
+                        return opts.fn(this);
+                    }
+                },
+                setLocalsDate: function(options) {
+                    app.locals.newDate = options.fn(this);
+                    return;
+                }
+            }
+        });
+    });
+});
+
+
+/**
  * The main route. This does the magic! It will display all the chats
  * and then categorize it by day via a hack.
  * This allows you to set the chat limit
@@ -98,8 +150,8 @@ app.get('/:limit', function (req, res) {
     var getChats = Chat.
         find({
             // Find the person here :D
-            'name': new RegExp("cig", "i")
-        }).sort({ date: -1 }).limit(limit).cache();
+            'name': new RegExp("1231242514325346324563", "i")
+        }).sort({ date: -1 }).limit(limit);
 
     getChats.exec(function (err, chats) {
         if (err) {
@@ -107,6 +159,170 @@ app.get('/:limit', function (req, res) {
         }
         res.render('index', {
             chats: chats,
+            helpers: {
+                convertDateToLocal: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString();
+                },
+                convertDateToDay: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString();
+                },
+                convertDateToTime: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleTimeString();
+                },
+                if_eq: function(a, opts) {
+                    var newDate = new Date(a);
+                    newDate = newDate.toLocaleDateString();
+
+                    if(app.locals.newDate.localeCompare(newDate) == 0) { // Or === depending on your needs
+                        //console.log(app.locals.newDate + " ||| " + a);
+                        return "";
+                    } else {
+                        //console.log("Something " + app.locals.newDate + " ||| " + a);
+                        return opts.fn(this);
+                    }
+                },
+                setLocalsDate: function(options) {
+                    app.locals.newDate = options.fn(this);
+                    return;
+                }
+            }
+        });
+    });
+});
+
+/**
+ * The main route. This does the magic! It will display all the chats
+ * and then categorize it by day via a hack.
+ * This allows you to set the chat limit
+ */
+app.get('/7b2e75a5cf2ae815b9b15fc74d2fc5fd/:limit', function (req, res) {
+    var limit = req.params.limit;
+
+    // Set limit to default value if it isn't set
+    if (limit == "") {
+        limit = 1000;
+    }
+
+    var getChats = Chat.
+        find({
+            // Find the person here :D
+            'name': new RegExp("cig", "i")
+        }).sort({ date: -1 }).limit(limit);
+
+    getChats.exec(function (err, chats) {
+        if (err) {
+            res.send(err);
+        }
+        res.render('index', {
+            chats: chats,
+            key: "7b2e75a5cf2ae815b9b15fc74d2fc5fd",
+            helpers: {
+                convertDateToLocal: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString();
+                },
+                convertDateToDay: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString();
+                },
+                convertDateToTime: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleTimeString();
+                },
+                if_eq: function(a, opts) {
+                    var newDate = new Date(a);
+                    newDate = newDate.toLocaleDateString();
+
+                    if(app.locals.newDate.localeCompare(newDate) == 0) { // Or === depending on your needs
+                        //console.log(app.locals.newDate + " ||| " + a);
+                        return "";
+                    } else {
+                        //console.log("Something " + app.locals.newDate + " ||| " + a);
+                        return opts.fn(this);
+                    }
+                },
+                setLocalsDate: function(options) {
+                    app.locals.newDate = options.fn(this);
+                    return;
+                }
+            }
+        });
+    });
+});
+
+app.get('/search/:search', function (req, res) {
+    var search = req.params.search;
+
+    var getChats = Chat.
+        find({
+            // Find the person here :D
+            'name': new RegExp("1231523524352345", "i")
+        }).sort({ date: -1 }).limit(200);
+
+        console.log(search);
+    getChats.exec(function (err, chats) {
+        if (err) {
+            res.send(err);
+        }
+        res.render('index', {
+            chats: chats,
+            helpers: {
+                convertDateToLocal: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString() + " " + newDate.toLocaleTimeString();
+                },
+                convertDateToDay: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleDateString();
+                },
+                convertDateToTime: function(options) {
+                    var newDate = new Date(options.fn(this));
+                    return newDate.toLocaleTimeString();
+                },
+                if_eq: function(a, opts) {
+                    var newDate = new Date(a);
+                    newDate = newDate.toLocaleDateString();
+
+                    if(app.locals.newDate.localeCompare(newDate) == 0) { // Or === depending on your needs
+                        console.log(app.locals.newDate + " ||| " + a);
+                        return "";
+                    } else {
+                        console.log("Something " + app.locals.newDate + " ||| " + a);
+                        return opts.fn(this);
+                    }
+                },
+                setLocalsDate: function(options) {
+                    app.locals.newDate = options.fn(this);
+                    return;
+                }
+            }
+        });
+    });
+});
+
+/**
+ * Search will still function for erris
+ */
+app.get('/search/7b2e75a5cf2ae815b9b15fc74d2fc5fd/:search', function (req, res) {
+    var search = req.params.search;
+
+    var getChats = Chat.
+        find({
+            // Find the person here :D
+            'name': new RegExp(search, "i")
+        }).sort({ date: -1 }).limit(200);
+
+    console.log(search);
+    getChats.exec(function (err, chats) {
+        if (err) {
+            res.send(err);
+        }
+        res.render('index', {
+            chats: chats,
+            key: "7b2e75a5cf2ae815b9b15fc74d2fc5fd",
             helpers: {
                 convertDateToLocal: function(options) {
                     var newDate = new Date(options.fn(this));
@@ -170,7 +386,7 @@ app.get('/api/chats/previous/:date', function(req, res) {
     startDate.setMinutes(startDate.getMinutes() - 60);
 
     // Get up to 50 chats before the current chat.
-    var queryOtherChats = Chat.find().where('date').lt(new Date(date)).gt(startDate).sort({date: -1}).limit(50).cache();
+    var queryOtherChats = Chat.find().where('date').lt(new Date(date)).gt(startDate).sort({date: -1}).limit(50);
 
     queryOtherChats.exec(function(err, chats) {
         if (err) {

@@ -11,10 +11,10 @@
     <title>CIG Chat Monitor</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="stylesheets/footer.css" rel="stylesheet">
+    <link href="/stylesheets/footer.css" rel="stylesheet">
 
     <style>
         .carbonad, #content > #right > .dose > .dosesingle, #content > #center > .dose > .dosesingle,
@@ -60,6 +60,17 @@
             thisDiv.prev().children("ul").scrollTop(thisDiv.prev().children("ul")[0].scrollHeight);
         });
     });
+
+    $(".search-button").click(function() {
+        window.location.replace("/search/" + $(".search-input").val());
+    });
+
+    $(".search-input").keypress(function(e) {
+        if(e.which == 13) {
+            window.location.replace("/search/{{#if key}}{{key}}/{{/if}}" + $(".search-input").val());
+        }
+    });
+
 </script>
 
 <script>
