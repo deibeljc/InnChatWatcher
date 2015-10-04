@@ -3,13 +3,18 @@ var express     = require('express');
 var app         = express();
 var exphbs      = require('express-handlebars');
 var compression = require('compression');
-var apicache    = require('apicache').options({ debug: true }).middleware;
 
 // Database things
 var mongoose    = require('mongoose');
+// Cache the database
+var cacheOpts = {
+    max:50,
+    maxAge:1000*60*2
+};
+
+require('mongoose-cache').install(mongoose, cacheOpts)
 // Models
 var Chat        = require('./app/models/chat');
-
 
 // Connect to the mongo database
 mongoose.connect("localhost:27017");
@@ -30,7 +35,7 @@ app.locals.newDate = "";
  * and then categorize it by day via a hack. This defaults it to 1000
  * chats
  */
-app.get('/', apicache("1 minute"), function (req, res) {
+app.get('/', function (req, res) {
     var getChats = Chat.
         find({
             // Find the person here :D
@@ -78,7 +83,7 @@ app.get('/', apicache("1 minute"), function (req, res) {
  * and then categorize it by day via a hack.
  * This allows you to set the chat limit
  */
-app.get('/:limit', apicache("1 minute"), function (req, res) {
+app.get('/:limit', function (req, res) {
     var limit = req.params.limit;
 
     // Set limit to default value if it isn't set
