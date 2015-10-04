@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
-
 var exphbs  = require('express-handlebars');
+var compression = require('compression')
 
 // Database things
 var mongoose    = require('mongoose');
@@ -16,7 +16,8 @@ app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
 
 // Compress
-app.use(express.compress());
+var oneDay = 86400000;
+app.use(compression());
 app.use(express.static(__dirname + '/public', { maxAge: oneDay }));
 
 // This is a terrible hack and you should feel bad.
