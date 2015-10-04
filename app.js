@@ -14,7 +14,10 @@ mongoose.connect("localhost:27017");
 var exphbs  = require('express-handlebars');
 app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
-app.use(express.static(__dirname + '/public'));
+
+// Compress
+app.use(express.compress());
+app.use(express.static(__dirname + '/public', { maxAge: oneDay }));
 
 // This is a terrible hack and you should feel bad.
 app.locals.newDate = "";
