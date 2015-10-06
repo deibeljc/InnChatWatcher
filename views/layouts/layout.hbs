@@ -48,17 +48,31 @@
     $('[data-toggle="tooltip"]').tooltip();
     $('.donationPopup').popover();
 
-    $(".panel-heading").click(function() {
+    $(".panel-title").click(function() {
         var thisDiv = $(this);
 
-        $.get( "api/chats/previous/" + $(this).attr("data-date"), function( data ) {
+        $.get( "/api/chats/previous/" + $(this).attr("data-date"), function( data ) {
             $.each(data, function(k, v) {
-                thisDiv.prev().children("ul").prepend(
-                    '<li class="list-group-item"><b>' + v.name + '</b>: ' + v.message + '</li>'
+                var name = "Anonymous";
+
+                if (v.name.match(/cig/i)) {
+                    name = v.name;
+                }
+
+                thisDiv.parent().parent().prev().children("ul").prepend(
+                    '<li class="list-group-item"><b>' + name + '</b>: ' + v.message + '</li>'
                 );
             });
-            thisDiv.prev().children("ul").scrollTop(thisDiv.prev().children("ul")[0].scrollHeight);
+            thisDiv.parent().parent().prev().children("ul").scrollTop(thisDiv.prev().children("ul")[0].scrollHeight);
         });
+    });
+
+    $(".vetted").change(function() {
+        if ($(this).is(":checked")) {
+            $.get( "/api/chats/vett/" + $(this).data("id"), function( data ) {});
+        } else {
+            $.get( "/api/chats/unvett/" + $(this).data("id"), function( data ) {});
+        }
     });
 
     $(".search-button").click(function() {
@@ -67,7 +81,7 @@
 
     $(".search-input").keypress(function(e) {
         if(e.which == 13) {
-            window.location.replace("/search/{{#if key}}{{key}}/{{/if}}" + $(".search-input").val());
+            window.location.replace("/search/{{#if key}}master/{{key}}/{{/if}}" + $(".search-input").val());
         }
     });
 

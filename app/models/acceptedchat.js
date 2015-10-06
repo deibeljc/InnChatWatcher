@@ -3,12 +3,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Schemas
-var ChatSchema = new Schema({
+var AcceptedChatSchema = new Schema({
     date: { type: Date, default: Date.now },
     name: String,
     message: String,
-    conference: String,
-    vetted: { type: Boolean, required: true, default: false }
+    conference: String
 });
 
-module.exports = mongoose.model('Chat', ChatSchema);
+module.exports = mongoose.model('AcceptedChat', AcceptedChatSchema);

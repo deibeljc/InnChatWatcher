@@ -4,13 +4,13 @@
 <!-- Begin page content -->
 <div class="container">
     <div class="page-header col-md-12">
-        <a href="/{{#if key}}{{key}}{{/if}}" style="color:#fafbfc;text-decoration: none;" class="col-md-6">
+        <a href="/{{#if key}}master/{{key}}{{/if}}" style="color:#fafbfc;text-decoration: none;" class="col-md-6">
             <img src="/images/NEW-LOGO-BUG-VIDEO.png" width="65px" style="float:left;margin-right:10px;" />
             <h1 style="margin-top:10px;"> Chatroll Monitor</h1>
         </a>
         <div class="col-md-4 pull-right" style="margin-top:15px;">
             <div class="input-group">
-                <input type="text" style="border-color:#3B4452" class="search-input form-control" placeholder="Search by CIG Employee.." id="query" name="query" value="">
+                <input type="text" style="border-color:#3B4452" class="search-input form-control" placeholder="Search by CIG Employee.." id="query" name="query" value="{{#if searched}}{{searched}}{{/if}}">
                 <div class="input-group-btn">
                     <button style="padding:9px;" type="submit" class="search-button btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </div>
@@ -19,9 +19,9 @@
     </div>
 
     <div class="btn-group col-md-12" style="margin-bottom:15px;" role="group" aria-label="...">
-        <a href="/{{#if key}}{{key}}/{{/if}}300" type="button" class="btn btn-default col-md-4">Show 300 Records</a>
-        <a href="/{{#if key}}{{key}}/{{/if}}1000" type="button" class="btn btn-default col-md-4">Show 1000 Records</a>
-        <a href="/{{#if key}}{{key}}/{{/if}}100000000000" type="button" class="btn btn-default col-md-4">Show All Records</a>
+        <a href="/{{#if key}}master/{{key}}/{{/if}}300" type="button" class="btn btn-default col-md-4">Show 300 Records</a>
+        <a href="/{{#if key}}master/{{key}}/{{/if}}1000" type="button" class="btn btn-default col-md-4">Show 1000 Records</a>
+        <a href="/{{#if key}}master/{{key}}/{{/if}}100000000000" type="button" class="btn btn-default col-md-4">Show All Records</a>
     </div>
 
     <p style="text-align:center;">This is a list of all the CIG Posts made in the RSI Chat. If you click on the name it will show
@@ -48,15 +48,19 @@
                     </ul>
                 </div>
 
-                <div class="panel-heading" role="button"
-                     data-date="{{date}}" data-toggle="collapse" href="#collapseListGroup{{id}}"
-                     aria-expanded="false" aria-controls="collapseListGroup{{id}}" id="collapseListGroupHeading{{id}}" >
-                    <h4 class="panel-title" data-toggle="tooltip" data-placement="top" title="{{#convertDateToLocal}}{{date}}{{/convertDateToLocal}}">
-                        <a class="">
-                            <b>{{name}}</b> <span>({{#convertDateToTime}}{{date}}{{/convertDateToTime}})</span>:
-                            <span style="font-size:13px;">{{message}}</span>
-                        </a>
-                    </h4>
+                <div class="panel-heading" >
+                    {{#if ../key}}<input type="checkbox" class="vetted" style="float: left; margin-top: 3px;margin-right: 5px;"
+                           data-name="{{name}}" data-message="{{message}}" data-date="{{date}}" data-id="{{id}}" {{#if vetted}}checked{{/if}}>{{/if}}
+                    <div class="panel-head-text">
+                        <h4 role="button"  data-date="{{date}}" data-toggle="collapse" href="#collapseListGroup{{id}}"
+                            aria-expanded="false" aria-controls="collapseListGroup{{id}}" id="collapseListGroupHeading" class="panel-title"
+                            data-toggle="tooltip" data-placement="top" title="{{#convertDateToLocal}}{{date}}{{/convertDateToLocal}}">
+                            <a class="">
+                                <b>{{name}}</b> <span>({{#convertDateToTime}}{{date}}{{/convertDateToTime}})</span>:
+                                <span style="font-size:13px;">{{message}}</span>
+                            </a>
+                        </h4>
+                    </div>
                 </div>
             {{/each}}
         </div>
