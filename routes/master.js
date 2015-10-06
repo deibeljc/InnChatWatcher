@@ -7,22 +7,6 @@
  */
 module.exports = function(app, mongoose, Chat, Key) {
 
-    app.get('/master/create/:key', function(req, res) {
-        key = req.params.key;
-
-        var newKey = new Key();
-        newKey.key = key;
-
-        newKey.save(function(err) {
-            if (err) {
-                console.log(err);
-            }
-
-            console.log("Registered master key");
-        });
-
-    });
-
     /**
      * The *key* route for Erris to still be able to view it.
      */
