@@ -1,6 +1,7 @@
 const xmpp = require('simple-xmpp');
 const fs = require('fs');
 const path = require('path');
+const Parser = require('./parser');
 
 /**
  * The ChatServer class provides an easy way to spool up a connection
@@ -10,11 +11,16 @@ class ChatServer {
   constructor() {
     // Get the connection info
     this.options = getConnectionInfo();
+    this.parser = new Parser();
   }
 
   connect() {
-    // Listen to the events before attempting to connect
-    this.listenToEvents();
+    // Call internal connect method
+    this._connect();
+  }
+
+  _connect() {
+    this._listenToEvents();
     xmpp.connect({
       jid: this.options.jid,
       password: this.options.password,
@@ -23,23 +29,25 @@ class ChatServer {
     });
   }
 
-  listenToEvents() {
+  _listenToEvents() {
     // Connected to the server
     xmpp.on('online', (data) => {
       xmpp.join(`general@channels.robertsspaceindustries.com/${this.options.nick}`);
       console.log(`I'm connected to general@${this.options.host}/${this.options.nick}`);
     });
 
-    xmpp.on('subscribe', (from) => {
-      console.log(from);
-    });
-
     xmpp.on('groupchat', (conference, from, message, stamp) => {
-      console.log(`${from} says \n\t ${message}`);
+      const parsedMessage = this.parser.parse(from, message);
+      console.log(`${parsedMessage.name} says \n\t ${parsedMessage.message}
+         Is CIG Employee: ${parsedMessage.isCigEmp}`);
     });
 
     xmpp.on('error', (err) => {
+      // Will try to handle errors by reconnecting to the service non-stop.
       console.error(err);
+      console.log(`Trying to re-connect to the service...`);
+      xmpp.disconnect();
+      this._connect();
     });
   }
 }
