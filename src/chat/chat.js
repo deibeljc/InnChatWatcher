@@ -2,36 +2,11 @@ const xmpp = require('simple-xmpp');
 const fs = require('fs');
 const path = require('path');
 
-const getConnectionInfo = () => {
-  let connectJson;
-
-  try {
-    connectJson = fs.readFileSync(path.join(__dirname, '../../config', 'connection.json'));
-    connectJson = JSON.parse(connectJson);
-    // Add the contructed nickname that comes from the host onto the object
-    connectJson.nick = connectJson.jid.substr(0, connectJson.jid.indexOf('@'));
-  } catch (err) {
-    // If the file does not exist print a verbose explanation
-    if (err.code === 'ENOENT') {
-      throw new Error(`
-        Expected projectRoot/config/connection.json to exist.
-        To fix this error create connection.json with this but replace
-        pertinent info
-        {
-          "jid": "handle@robertsspaceindustries.com",
-          "password": "chatToken",
-          "host": "xmpp.robertsspaceindustries.com"
-        }
-      `);
-    }
-    throw new Error(err);
-  }
-
-  return connectJson;
-}
-
+/**
+ * The ChatServer class provides an easy way to spool up a connection
+ * to the RSI xmpp server.
+ */
 class ChatServer {
-
   constructor() {
     // Get the connection info
     this.options = getConnectionInfo();
@@ -67,6 +42,39 @@ class ChatServer {
       console.error(err);
     });
   }
+}
+
+/**
+ * An internal method that gets the connection info from the connection.json
+ * file and returns it as an object. This is only needed to be used in order
+ * to connect to the xmpp server
+ *
+ * @return {[type]} [description]
+ */
+const getConnectionInfo = () => {
+  let connectJson;
+  try {
+    connectJson = fs.readFileSync(path.join(__dirname, '../../config', 'connection.json'));
+    connectJson = JSON.parse(connectJson);
+    // Add the contructed nickname that comes from the host onto the object
+    connectJson.nick = connectJson.jid.substr(0, connectJson.jid.indexOf('@'));
+  } catch (err) {
+    // If the file does not exist print a verbose explanation
+    if (err.code === 'ENOENT') {
+      throw new Error(`
+        Expected projectRoot/config/connection.json to exist.
+        To fix this error create connection.json with this but replace
+        pertinent info
+        {
+          "jid": "handle@robertsspaceindustries.com",
+          "password": "chatToken",
+          "host": "xmpp.robertsspaceindustries.com"
+        }
+      `);
+    }
+    throw new Error(err);
+  }
+  return connectJson;
 }
 
 module.exports = ChatServer;
